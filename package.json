@@ -1,0 +1,34 @@
+{
+  "name": "dsh-llm-repeat-guard",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Abort a streaming model call the moment its reasoning/text collapses into mechanical repetition, instead of burning the whole turn.",
+  "license": "MIT",
+  "author": "wdz211",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdz211/dsh-llm-repeat-guard.git"
+  },
+  "homepage": "https://github.com/wdz211/dsh-llm-repeat-guard#readme",
+  "bugs": {
+    "url": "https://github.com/wdz211/dsh-llm-repeat-guard/issues"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "test/"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

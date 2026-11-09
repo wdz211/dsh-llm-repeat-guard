@@ -1,0 +1,20 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax check
+        run: |
+          for f in $(find . -name '*.js' -o -name '*.mjs' | grep -v node_modules); do
+            node --check "$f" || exit 1
+          done
+      - name: Unit tests
+        # 自测不依赖 DSH 宿主：index.js 只导出纯函数，用例用假流喂数据，离线必绿。
+        run: node --test

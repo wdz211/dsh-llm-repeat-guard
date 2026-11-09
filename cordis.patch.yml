@@ -1,0 +1,15 @@
+- insert:
+    - id: llm-repeat-guard
+      name: 'dsh-llm-repeat-guard'
+      config:
+        enabled: true
+        # 实测退化时的重复量是 680 ~ 52216 次，正常文本的偶然重复峰值在 30~80 次，
+        # 120 是两者中间的安全线。单字符单元（「啊」「哈」）更容易偶发，门槛抬到 400。
+        minRepeats: 120
+        singleCharMinRepeats: 400
+        # 8 而不是 4：真实退化单元常带空白/换行（`wait. ` 6 字符、`做。\n\n` 4 字符），
+        # unitMax 太小会让这类整段重复从缝里漏过去。实测 10445 个真实 reasoning 块，
+        # 这个配置触发 37 次且全部落在 3 个已知退化会话里，正常块零误报。
+        unitMax: 8
+        minChars: 600
+        windowChars: 2000
